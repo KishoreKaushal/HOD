@@ -8,16 +8,16 @@ license:                MIT
 license-file:           LICENSE
 author:                 Kaushal Kishore
 maintainer:             kshr4kshl@gmail.com
--- copyright:   
+copyright:              (c) 2020 Kaushal Kishore
 -- category:    
 build-type:             Simple
 extra-source-files:     CHANGELOG.md
 
 library
     hs-source-dirs:     src
-    exposed-modules:    HOD.ensemble.IForest
+    exposed-modules:    HOD.Ensemble.IForest
     other-modules:
-    build-depends:
+    build-depends:      base >=4.12 && <4.13
 
 
 executable pima
