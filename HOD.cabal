@@ -1,0 +1,28 @@
+cabal-version:       >=1.10
+name:                   HOD
+version:                0.1.0.0
+-- synopsis:    
+-- description: 
+-- bug-reports: 
+license:                MIT
+license-file:           LICENSE
+author:                 Kaushal Kishore
+maintainer:             kshr4kshl@gmail.com
+-- copyright:   
+-- category:    
+build-type:             Simple
+extra-source-files:     CHANGELOG.md
+
+library
+    hs-source-dirs:     src
+    exposed-modules:    HOD.ensemble.IForest
+    other-modules:
+    build-depends:
+
+
+executable pima
+    hs-source-dirs:     example/pima
+    main-is:            pima.hs
+    build-depends:      base >=4.12 && <4.13
+                    ,   HOD
+    default-language:   Haskell2010
