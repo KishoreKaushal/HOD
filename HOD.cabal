@@ -21,6 +21,7 @@ library
     build-depends:      base
                     ,   csv
                     ,   Unique
+                    ,   parsec
     ghc-options:        -Wall
 
 
@@ -29,7 +30,5 @@ executable pima
     main-is:            pima.hs
     build-depends:      base
                     ,   HOD
-                    ,   csv
-                    ,   Unique
     default-language:   Haskell2010
     ghc-options:        -Wall
