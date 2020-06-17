@@ -1,4 +1,4 @@
-module HOD.Ensemble.IForest where
+module HOD.Ensemble.IForest (getIForest) where
 
 import Data.List.Unique (uniq)
 
@@ -14,8 +14,18 @@ data ITree  = None
 data IForest = IForest {
         numTrees :: Int,
         subsamplingSize :: Int, 
-        itrees :: [ITree]
+        itrees :: [ITree],
+        df :: [[Double]]
     } deriving (Eq, Show)
+
+
+getIForest :: Int -> Int -> [[Double]] -> IForest
+getIForest n s x = IForest {
+                            numTrees = n, 
+                            subsamplingSize = s, 
+                            itrees = [], 
+                            df = x
+                        }
 
 
 sayHello :: IO ()
