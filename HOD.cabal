@@ -16,6 +16,7 @@ extra-source-files:     CHANGELOG.md
 library
     hs-source-dirs:     src
     exposed-modules:    HOD.Ensemble.IForest
+                    ,   HOD.CSV.DataFrame
     other-modules:
     build-depends:      base
                     ,   csv
