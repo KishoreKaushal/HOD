@@ -30,7 +30,7 @@ fieldToInt = read
 
 
 getMATFromCSV :: CSV -> MAT
-getMATFromCSV [] = []
+getMATFromCSV [[""]] = []
 getMATFromCSV (r:csv) = (fieldToInt <$> r) : (getMATFromCSV csv)
 
 
