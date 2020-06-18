@@ -2,6 +2,8 @@ module HOD.Ensemble.IForest (getIForest) where
 
 import Data.List.Unique (uniq)
 
+import HOD.CSV.DataFrame (DataFrame)
+
 data ITree  = None 
             | Node {
                 right :: ITree,
@@ -15,11 +17,11 @@ data IForest = IForest {
         numTrees :: Int,
         subsamplingSize :: Int, 
         itrees :: [ITree],
-        df :: [[Double]]
+        df :: DataFrame
     } deriving (Eq, Show)
 
 
-getIForest :: Int -> Int -> [[Double]] -> IForest
+getIForest :: Int -> Int -> DataFrame -> IForest
 getIForest n s x = IForest {
                             numTrees = n, 
                             subsamplingSize = s, 
