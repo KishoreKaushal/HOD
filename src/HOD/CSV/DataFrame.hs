@@ -22,13 +22,17 @@ safeTail :: [a] -> Maybe [a]
 safeTail [] = Nothing
 safeTail xs = Just (tail xs)
 
-getMATFromCSV csv = safeHead
+fromStringToInt :: String -> Double
+fromStringToInt = read
+
+getMATFromCSV :: CSV -> MAT
+getMATFromCSV [] = []
+getMATFromCSV r::csv = (fromStringToInt <$> r) : (getMATFromCSV csv)
 
 -- type CSV = [[String]]
 -- first row is header, rest of the rows is data
 getDataFrameFromCSV :: CSV -> DataFrame
 getDataFrameFromCSV csv = getMATFromCSV 
-
 
 fromCSV :: FilePath -> IO (DataFrame)
 fromCSV fp = do 
