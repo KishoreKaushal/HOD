@@ -11,14 +11,14 @@ data ITree  = None
                 splitAttr :: Int, 
                 splitVal :: Double, 
                 size :: Int
-            } deriving (Eq, Show)
+            } deriving (Show)
 
 data IForest = IForest {
         numTrees :: Int,
         subsamplingSize :: Int, 
         itrees :: [ITree],
         df :: DataFrame
-    } deriving (Eq, Show)
+    } deriving (Show)
 
 
 getIForest :: Int -> Int -> DataFrame -> IForest

@@ -1,4 +1,4 @@
-module HOD.CSV.DataFrame (fromCSV) where
+module HOD.CSV.DataFrame (fromCSV, DataFrame) where
 
 import Text.CSV (parseCSVFromFile, CSV, Record, Field)
 import Text.Parsec.Error (ParseError)
@@ -31,7 +31,7 @@ fieldToInt = read
 
 getMATFromCSV :: CSV -> MAT
 getMATFromCSV [] = []
-getMATFromCSV r::csv = (fieldToInt <$> r) : (getMATFromCSV csv)
+getMATFromCSV (r:csv) = (fieldToInt <$> r) : (getMATFromCSV csv)
 
 
 createDataFrame :: Record -> CSV -> DataFrame
@@ -48,7 +48,7 @@ createDataFrame hd csv = DataFrame {
 getDataFrameFromCSV :: CSV -> DataFrame
 getDataFrameFromCSV csv = let maybehd = safeHead csv in 
     case maybehd of 
-        Maybe hd -> createDataFrame hd (tail csv)
+        Just hd -> createDataFrame hd (tail csv)
         Nothing -> EmptyDataFrame
 
 
