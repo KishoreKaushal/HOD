@@ -17,11 +17,14 @@ library
     hs-source-dirs:     src
     exposed-modules:    HOD.Ensemble.IForest
                     ,   HOD.CSV.DataFrame
+                    .   HOD.Random
     other-modules:
     build-depends:      base
                     ,   csv
                     ,   Unique
                     ,   parsec
+                    ,   random
+                    ,   random-shuffle
     ghc-options:        -Wall
 
 

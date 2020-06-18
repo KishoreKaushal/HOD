@@ -13,6 +13,10 @@ data ITree  = None
                 size :: Int
             } deriving (Show)
 
+
+create
+
+
 data IForest = IForest {
         numTrees :: Int,
         subsamplingSize :: Int, 
@@ -28,6 +32,8 @@ getIForest n s x = IForest {
                             itrees = [], 
                             df = x
                         }
+
+
 
 
 sayHello :: IO ()
