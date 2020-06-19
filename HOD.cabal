@@ -35,3 +35,10 @@ executable pima
                     ,   HOD
     default-language:   Haskell2010
     ghc-options:        -Wall
+
+test-suite readCSV
+    hs-source-dirs:     test
+    build-depends:      base
+                    ,   HOD
+    main-is:            readCSV.hs
+    type:               exitcode-stdio-1.0
