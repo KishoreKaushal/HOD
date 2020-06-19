@@ -1,4 +1,4 @@
-module Random (shuffleList, genSubsample) where 
+module HOD.Random (shuffleList, genSubsample) where 
 
 import System.Random (mkStdGen)
 import System.Random.Shuffle (shuffle')
@@ -26,9 +26,9 @@ shuffleList xs sd = shuffle' xs (length xs) (mkStdGen sd)
 
 
 genSubsampleHelper :: [a] -> NumSamples -> SampleSize -> Seed -> [[a]]
-genSubsampleHelper xs n s sd = (reshape n s) . (take (n * s)) . (shuffleList xs sd)
+genSubsampleHelper xs n s sd = ((reshape n s) . (take (n * s)) . shuffleList) xs sd
 
 
 genSubsample :: [a] -> NumSamples -> SampleSize -> Seed -> Maybe [[a]]
-getSubsample xs n s sd  | 0 < n * s && n * s <= length xs = Just genSubsampleHelper xs n s sd
+getSubsample xs n s sd  | 0 < n * s && n * s <= length xs = Just (genSubsampleHelper xs n s sd)
                         | otherwise = Nothing

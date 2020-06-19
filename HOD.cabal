@@ -17,7 +17,7 @@ library
     hs-source-dirs:     src
     exposed-modules:    HOD.Ensemble.IForest
                     ,   HOD.CSV.DataFrame
-                    .   HOD.Random
+                    ,   HOD.Random
     other-modules:
     build-depends:      base
                     ,   csv

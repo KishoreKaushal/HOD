@@ -14,9 +14,6 @@ data ITree  = None
             } deriving (Show)
 
 
-create
-
-
 data IForest = IForest {
         numTrees :: Int,
         subsamplingSize :: Int, 
