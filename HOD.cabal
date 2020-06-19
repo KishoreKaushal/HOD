@@ -42,3 +42,10 @@ test-suite readCSV
                     ,   HOD
     main-is:            readCSV.hs
     type:               exitcode-stdio-1.0
+
+test-suite testRandom
+    hs-source-dirs:     test
+    build-depends:      base
+                    ,   HOD
+    main-is:            testRandom.hs
+    type:               exitcode-stdio-1.0

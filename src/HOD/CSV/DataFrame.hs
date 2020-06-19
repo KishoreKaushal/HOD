@@ -1,4 +1,8 @@
-module HOD.CSV.DataFrame (fromCSV, DataFrame) where
+module HOD.CSV.DataFrame (
+    fromCSV, 
+    DataFrame,
+    DataFrame (..) 
+    ) where
 
 import Text.CSV (parseCSVFromFile, CSV, Record, Field)
 import Text.Parsec.Error (ParseError)
