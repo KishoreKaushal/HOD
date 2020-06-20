@@ -1,7 +1,8 @@
 module HOD.CSV.DataFrame (
     fromCSV, 
     DataFrame,
-    DataFrame (..) 
+    DataFrame (..),
+    MAT
     ) where
 
 import Text.CSV (parseCSVFromFile, CSV, Record, Field)

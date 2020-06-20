@@ -2,10 +2,13 @@ module HOD.Ensemble.IForest (getIForest) where
 
 import Data.List.Unique (uniq)
 
-import HOD.CSV.DataFrame (DataFrame)
+import HOD.CSV.DataFrame (DataFrame, DataFrame(..), MAT)
 
-data ITree  = None 
-            | Node {
+import HOD.Random
+
+
+data ITree  = EmptyNode 
+            | InternalNode {
                 right :: ITree,
                 left :: ITree,
                 splitAttr :: Int, 
@@ -15,23 +18,35 @@ data ITree  = None
 
 
 data IForest = IForest {
-        numTrees :: Int,
-        subsamplingSize :: Int, 
-        itrees :: [ITree],
-        df :: DataFrame
+        numTrees :: NumSamples,
+        subsamplingSize :: SampleSize, 
+        df :: DataFrame,
+        itrees :: Maybe [ITree]
     } deriving (Show)
 
 
-getIForest :: Int -> Int -> DataFrame -> IForest
-getIForest n s x = IForest {
+getIForest :: Int -> Int -> DataFrame -> Seed -> IForest
+getIForest n s x sd = IForest {
                             numTrees = n, 
                             subsamplingSize = s, 
-                            itrees = [], 
-                            df = x
+                            df = x,
+                            itrees = genITrees n s (dat x) sd
                         }
 
 
+-- generate samples from : 
+-- [MAT] --> List of subsamples 
+getITree :: MAT -> ITree
+getITree mat = EmptyNode
 
+
+genITrees :: NumSamples -> SampleSize -> MAT -> Seed -> Maybe [ITree]
+genITrees n s x sd | n * s <= 0 || (length x) <= n * s = Nothing
+                   | otherwise = let maybeSubsamples = genSubsample x n s sd
+                                 in case maybeSubsamples of 
+                                        Just subsamples -> Just (map getITree subsamples)
+                                        _ -> Nothing
+                            
 
 sayHello :: IO ()
 sayHello = do

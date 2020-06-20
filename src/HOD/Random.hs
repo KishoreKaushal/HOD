@@ -1,4 +1,4 @@
-module HOD.Random (shuffleList, genSubsample) where 
+module HOD.Random where 
 
 import System.Random (mkStdGen)
 import System.Random.Shuffle (shuffle')
