@@ -21,9 +21,10 @@ install:
   - cabal new-build --enable-tests
 
 script:
+  - cabal install
   - cabal configure --enable-tests
   - cabal test
-  # - cabal new-test --enable-tests
+  - cabal new-test --enable-tests
   - curl -sSL https://raw.github.com/ndmitchell/hlint/master/misc/run.sh | sh -s .
 
 notifications:
