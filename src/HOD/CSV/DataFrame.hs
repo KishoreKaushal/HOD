@@ -50,8 +50,8 @@ getUniqueValOfAttr mat attrIdx = uniq . getCol mat attrIdx
 -- split matrix using col val (FALSE, TRUE)
 splitMatUsingColVal :: (Double -> Bool) -> MAT -> Int -> (MAT, MAT)
 splitMatUsingColVal _ [] _ = ([], [])
-splitMatUsingColVal filtCond row:mat colIdx = let (fF, fT) = splitMatUsingColVal filtCond mat colIdx 
-                                              in if filtCond $ row !! colIdx then (fF, fT:row) else (fF:row, fT)
+splitMatUsingColVal filtCond (row:mat) colIdx = let (fF, fT) = splitMatUsingColVal filtCond mat colIdx 
+                                                in if filtCond $ row !! colIdx then (fF, fT:row) else (fF:row, fT)
 
 
 safeHead :: [a] -> Maybe a
