@@ -15,13 +15,15 @@ matrix:
   - ghc: 8.6.5
 
 install:
+  - sudo apt install tree
   - ghc --version
   - cabal --version
   - cabal new-update
   - cabal new-build --enable-tests
+  - cabal install
 
 script:
-  - cabal install
+  - tree
   - cabal configure --enable-tests
   - cabal test
   - cabal new-test --enable-tests
