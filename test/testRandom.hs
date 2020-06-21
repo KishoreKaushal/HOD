@@ -12,6 +12,6 @@ seed = 0
 
 main :: IO ()
 main = do 
-    df <- fromCSV "/home/kaushal/Documents/git/haskell-projects/HOD/data/pima.csv"
+    df <- fromCSV "pima.csv"
     putStrLn . show $ genSubsample (dat df) numSamples sampleSize seed
 
