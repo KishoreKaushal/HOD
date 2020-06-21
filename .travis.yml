@@ -18,10 +18,12 @@ install:
   - ghc --version
   - cabal --version
   - cabal new-update
-  - cabal new-build --enable-tests --enable-benchmarks
+  - cabal new-build --enable-tests
 
 script:
-  - cabal new-test --enable-tests
+  - cabal configure --enable-tests
+  - cabal test
+  # - cabal new-test --enable-tests
   - curl -sSL https://raw.github.com/ndmitchell/hlint/master/misc/run.sh | sh -s .
 
 notifications:
