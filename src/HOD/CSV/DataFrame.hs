@@ -34,7 +34,7 @@ getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat 
 -- get a column of the MAT
 getCol :: MAT -> Int -> [Double]
 getCol [] _ = []
-getCol (row:mat) colIdx = (row !! colIdx) : (getCol mat colIdx)
+getCol (row:mat) colIdx = (row !! colIdx) : getCol mat colIdx
 
 
 -- get a row of the MAT
@@ -70,7 +70,7 @@ fieldToInt = read
 
 getMATFromCSV :: CSV -> MAT
 getMATFromCSV [[""]] = []
-getMATFromCSV (r:csv) = (fieldToInt <$> r) : (getMATFromCSV csv)
+getMATFromCSV (r:csv) = (fieldToInt <$> r) : getMATFromCSV csv
 
 
 createDataFrame :: Record -> CSV -> DataFrame
@@ -91,7 +91,7 @@ getDataFrameFromCSV csv = let maybehd = safeHead csv in
         Nothing -> EmptyDataFrame
 
 
-fromCSV :: FilePath -> IO (DataFrame)
+fromCSV :: FilePath -> IO DataFrame
 fromCSV fp = do 
     parsedCSV <- parseCSVFromFile fp
     case parsedCSV of 

@@ -13,5 +13,5 @@ seed = 0
 main :: IO ()
 main = do 
     df <- fromCSV "/home/travis/build/KishoreKaushal/HOD/test/pima.csv"
-    putStrLn . show $ genSubsample (dat df) numSamples sampleSize seed
+    print $ genSubsample (dat df) numSamples sampleSize seed
 

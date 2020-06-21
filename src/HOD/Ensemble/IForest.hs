@@ -41,7 +41,7 @@ getIForest n s x sd = IForest {
 -- generate samples from : 
 -- [MAT] --> List of subsamples 
 getITree :: MAT -> ITree
-getITree mat = let  numAttr = length $ mat !! 0
+getITree mat = let  numAttr = length $ head mat
                     p = getRandomInRange 0 (numAttr-1)       -- splitting attribute
                     (minVal, maxVal) = getMinMaxValOfAttr mat p
                     q = getRandomInRange (minVal + eps) (maxVal - eps) -- splitting value
@@ -62,7 +62,7 @@ getITree mat = let  numAttr = length $ mat !! 0
 
 
 genITrees :: NumSamples -> SampleSize -> MAT -> Seed -> Maybe [ITree]
-genITrees n s x sd | n * s <= 0 || (length x) <= n * s = Nothing
+genITrees n s x sd | n * s <= 0 || length x <= n * s = Nothing
                    | otherwise = let maybeSubsamples = genSubsample x n s sd
                                  in case maybeSubsamples of 
                                         Just subsamples -> Just (map getITree subsamples)

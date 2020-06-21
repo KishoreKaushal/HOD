@@ -20,7 +20,7 @@ getRandomInRange = curry $ unsafePerformIO . randomRIO
 
 reshapeHelper :: NumRow -> NumCol -> [a] -> [[a]]
 reshapeHelper r c xs | r <= 0 = []
-                     | otherwise = (take c xs) : reshapeHelper  (r-1) c (drop c xs)
+                     | otherwise = take c xs : reshapeHelper  (r-1) c (drop c xs)
 
 
 reshape :: NumRow -> NumCol -> [a] -> Maybe [[a]]
@@ -33,7 +33,7 @@ shuffleList xs sd = shuffle' xs (length xs) (mkStdGen sd)
 
 
 genSubsampleHelper :: [a] -> NumSamples -> SampleSize -> Seed -> Maybe [[a]]
-genSubsampleHelper xs n s sd = f . g . h $ sd where   
+genSubsampleHelper xs n s = f . g . h where   
     f = reshape n s
     g = take $ n*s
     h = shuffleList xs
