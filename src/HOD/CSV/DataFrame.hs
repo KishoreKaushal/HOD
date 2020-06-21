@@ -1,9 +1,4 @@
-module HOD.CSV.DataFrame (
-    fromCSV, 
-    DataFrame,
-    DataFrame (..),
-    MAT
-    ) where
+module HOD.CSV.DataFrame where
 
 import Text.CSV (parseCSVFromFile, CSV, Record, Field)
 
@@ -50,6 +45,13 @@ getRow mat rowIdx = mat !! rowIdx
 -- return the number of unique values of an attribute
 getUniqueValOfAttr :: MAT -> Int -> Int 
 getUniqueValOfAttr mat attrIdx = uniq . getCol mat attrIdx
+
+
+-- split matrix using col val (FALSE, TRUE)
+splitMatUsingColVal :: (Double -> Bool) -> MAT -> Int -> (MAT, MAT)
+splitMatUsingColVal _ [] _ = ([], [])
+splitMatUsingColVal filtCond row:mat colIdx = let (fF, fT) = splitMatUsingColVal filtCond mat colIdx 
+                                              in if filtCond $ row !! colIdx then (fF, fT:row) else (fF:row, fT)
 
 
 safeHead :: [a] -> Maybe a
