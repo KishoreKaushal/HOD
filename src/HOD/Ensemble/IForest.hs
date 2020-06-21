@@ -51,7 +51,7 @@ getITree mat = let  numAttr = length $ mat !! 0
                     (ltMat, rtMat) = splitMatUsingColVal filterCondn mat p
                 in 
                     if sz > 1 && numUniqueVals > 1 
-                    then ITree {
+                    then InternalNode {
                                 splitAttr = p,
                                 splitVal = q,
                                 size = sz,

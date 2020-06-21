@@ -1,8 +1,8 @@
 module HOD.Random where 
 
-import System.Random (mkStdGen)
+import System.Random
 
-import System.Random.Shuffle (shuffle')
+import System.Random.Shuffle
 
 import System.IO.Unsafe
 
@@ -14,7 +14,7 @@ type NumRow = Int
 type NumCol = Int
 
 
-getRandomInRange :: Num a => a -> a -> a
+getRandomInRange :: Random a => a -> a -> a
 getRandomInRange = curry $ unsafePerformIO . randomRIO
 
 

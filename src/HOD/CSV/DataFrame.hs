@@ -23,7 +23,7 @@ data DataFrame  = EmptyDataFrame
 -- return the min-max value of an attribute
 getMinMaxValOfAttr :: MAT -> Int -> (Double, Double)
 getMinMaxValOfAttr [] _ = (minValue, maxValue)
-getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat 
+getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat attrIdx
                                             currentVal = row !! attrIdx
                                             updMin = if currentVal < min then currentVal else min
                                             updMax = if currentVal > max then currentVal else max
@@ -34,7 +34,7 @@ getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat
 -- get a column of the MAT
 getCol :: MAT -> Int -> [Double]
 getCol [] _ = []
-getCol (row:mat) colIdx = (row !! colIdx) : getCol mat colIdx
+getCol (row:mat) colIdx = (row !! colIdx) : (getCol mat colIdx)
 
 
 -- get a row of the MAT
@@ -43,15 +43,15 @@ getRow mat rowIdx = mat !! rowIdx
 
 
 -- return the number of unique values of an attribute
-getUniqueValOfAttr :: MAT -> Int -> Int 
-getUniqueValOfAttr mat attrIdx = uniq . getCol mat attrIdx
+getUniqueValOfAttr :: MAT -> Int -> [Double]
+getUniqueValOfAttr mat attrIdx = uniq $ getCol mat attrIdx
 
 
 -- split matrix using col val (FALSE, TRUE)
 splitMatUsingColVal :: (Double -> Bool) -> MAT -> Int -> (MAT, MAT)
 splitMatUsingColVal _ [] _ = ([], [])
 splitMatUsingColVal filtCond (row:mat) colIdx = let (fF, fT) = splitMatUsingColVal filtCond mat colIdx 
-                                                in if filtCond $ row !! colIdx then (fF, fT:row) else (fF:row, fT)
+                                                in if filtCond $ row !! colIdx then (fF, row:fT) else (row:fF, fT)
 
 
 safeHead :: [a] -> Maybe a
