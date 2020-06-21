@@ -25,6 +25,7 @@ library
                     ,   parsec
                     ,   random
                     ,   random-shuffle
+                    ,   numeric-limits
     ghc-options:        -Wall
 
 

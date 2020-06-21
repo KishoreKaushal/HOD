@@ -1,7 +1,10 @@
 module HOD.Random where 
 
 import System.Random (mkStdGen)
+
 import System.Random.Shuffle (shuffle')
+
+import System.IO.Unsafe
 
 
 type Seed = Int
@@ -9,6 +12,10 @@ type SampleSize = Int
 type NumSamples = Int
 type NumRow = Int 
 type NumCol = Int
+
+
+getRandomInRange :: Num a => a -> a -> a
+getRandomInRange = curry $ unsafePerformIO . randomRIO
 
 
 reshapeHelper :: NumRow -> NumCol -> [a] -> [[a]]

@@ -2,9 +2,13 @@ module HOD.Ensemble.IForest (getIForest) where
 
 import Data.List.Unique (uniq)
 
-import HOD.CSV.DataFrame (DataFrame, DataFrame(..), MAT)
+import HOD.CSV.DataFrame
 
 import HOD.Random
+
+-- TODO : Complete this module
+eps :: Fractional p => p
+eps = 1e-5
 
 
 data ITree  = EmptyNode 
@@ -37,7 +41,24 @@ getIForest n s x sd = IForest {
 -- generate samples from : 
 -- [MAT] --> List of subsamples 
 getITree :: MAT -> ITree
-getITree mat = EmptyNode
+getITree mat = let  numAttr = length $ mat !! 0
+                    p = getRandomInRange 0 (numAttr-1)       -- splitting attribute
+                    (minVal, maxVal) = getMinMaxValOfAttr mat p
+                    q = getRandomInRange (minVal + eps) (maxVal - eps) -- splitting value
+                    sz = length mat
+                    numUniqueVals = length $ getUniqueValOfAttr mat p
+                    filterCondn v = q <= v 
+                    (ltMat, rtMat) = splitMatUsingColVal filterCondn mat p
+                in 
+                    if sz > 1 && numUniqueVals > 1 
+                    then ITree {
+                                splitAttr = p,
+                                splitVal = q,
+                                size = sz,
+                                right = getITree rtMat,
+                                left = getITree ltMat
+                            }
+                    else EmptyNode
 
 
 genITrees :: NumSamples -> SampleSize -> MAT -> Seed -> Maybe [ITree]
