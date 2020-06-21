@@ -6,7 +6,12 @@ module HOD.CSV.DataFrame (
     ) where
 
 import Text.CSV (parseCSVFromFile, CSV, Record, Field)
+
 import Text.Parsec.Error (ParseError)
+
+import Numeric.Limits
+
+import Data.List.Unique (uniq)
 
 type MAT = [[Double]]
 
@@ -18,6 +23,33 @@ data DataFrame  = EmptyDataFrame
                     rowIdx :: [Int],
                     dat :: MAT
                 } deriving(Show)
+
+
+-- return the min-max value of an attribute
+getMinMaxValOfAttr :: MAT -> Int -> (Double, Double)
+getMinMaxValOfAttr [] _ = (minValue, maxValue)
+getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat 
+                                            currentVal = row !! attrIdx
+                                            updMin = if currentVal < min then currentVal else min
+                                            updMax = if currentVal > max then currentVal else max
+                                          in
+                                            (updMin, updMax)
+
+
+-- get a column of the MAT
+getCol :: MAT -> Int -> [Double]
+getCol [] _ = []
+getCol (row:mat) colIdx = (row !! colIdx) : getCol mat colIdx
+
+
+-- get a row of the MAT
+getRow :: MAT -> Int -> [Double]
+getRow mat rowIdx = mat !! rowIdx
+
+
+-- return the number of unique values of an attribute
+getUniqueValOfAttr :: MAT -> Int -> Int 
+getUniqueValOfAttr mat attrIdx = uniq . getCol mat attrIdx
 
 
 safeHead :: [a] -> Maybe a
