@@ -67,7 +67,19 @@ genITrees n s x sd | n * s <= 0 || length x <= n * s = Nothing
                                  in case maybeSubsamples of 
                                         Just subsamples -> Just (map getITree subsamples)
                                         _ -> Nothing
-                            
+
+
+pathLength :: [Double] -> ITree -> Int -> Int
+pathLength _ EmptyNode _ = 0
+pathLength _ _ 0 = 0
+pathLength inp itree hlim = let p = splitAttr itree 
+                                q = splitVal itree
+                            in 
+                                if (inp !! p) <= q 
+                                then 1 + pathLength inp (left itree) (hlim-1)
+                                else 1 + pathLength inp (right itree) (hlim-1)
+
+
 
 sayHello :: IO ()
 sayHello = do
