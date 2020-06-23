@@ -69,16 +69,32 @@ genITrees n s x sd | n * s <= 0 || length x <= n * s = Nothing
                                         _ -> Nothing
 
 
-pathLength :: [Double] -> ITree -> Int -> Int
-pathLength _ EmptyNode _ = 0
-pathLength _ _ 0 = 0
-pathLength inp itree hlim = let p = splitAttr itree 
+pathLength :: Int -> [Double] -> ITree -> Double
+pathLength _ _ EmptyNode = 0.0
+pathLength 0 _ _ = 0.0
+pathLength hlim inp itree = let p = splitAttr itree 
                                 q = splitVal itree
                             in 
                                 if (inp !! p) <= q 
-                                then 1 + pathLength inp (left itree) (hlim-1)
-                                else 1 + pathLength inp (right itree) (hlim-1)
+                                then 1.0 + pathLength  (hlim-1) inp (left itree)
+                                else 1.0 + pathLength (hlim-1) inp (right itree)
 
+
+average :: [Double] -> Double
+average l = sum l / fromIntegral (length l)
+
+
+getAnomalyScoreHelper :: Int -> [ITree] -> [Double] -> [Double]
+getAnomalyScoreHelper _ _ [] = []
+getAnomalyScoreHelper hlim (t:lstItree) r = pathLength hlim r t : getAnomalyScoreHelper hlim lstItree r
+
+
+getAnomalyScore :: MAT -> IForest -> Int -> Maybe [Double]
+getAnomalyScore mat iforest hlim = case itrees iforest of 
+                                    Just lstItree -> Just scores 
+                                                    where lstPathLength = getAnomalyScoreHelper hlim lstItree <$> mat
+                                                          scores = average <$> lstPathLength
+                                    _ -> Nothing
 
 
 sayHello :: IO ()
