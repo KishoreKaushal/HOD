@@ -22,7 +22,7 @@ data DataFrame  = EmptyDataFrame
 
 -- return the min-max value of an attribute
 getMinMaxValOfAttr :: MAT -> Int -> (Double, Double)
-getMinMaxValOfAttr [] _ = (minValue, maxValue)
+getMinMaxValOfAttr [] _ = (maxValue, minValue)
 getMinMaxValOfAttr (row:mat) attrIdx = let  (min, max) = getMinMaxValOfAttr mat attrIdx
                                             currentVal = row !! attrIdx
                                             updMin = if currentVal < min then currentVal else min
