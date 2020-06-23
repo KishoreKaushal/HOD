@@ -1,6 +1,6 @@
 cabal-version:       >=1.10
 name:                   HOD
-version:                0.1.0
+version:                0.1.0.1
 -- synopsis:    
 description:            Haksell outlier detection library
 -- bug-reports: 
@@ -49,4 +49,11 @@ test-suite testRandom
     build-depends:      base
                     ,   HOD
     main-is:            testRandom.hs
+    type:               exitcode-stdio-1.0
+
+test-suite testIForest
+    hs-source-dirs:     test
+    build-depends:      base
+                    ,   HOD
+    main-is:            testIForest.hs
     type:               exitcode-stdio-1.0

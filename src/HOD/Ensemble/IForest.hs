@@ -1,4 +1,4 @@
-module HOD.Ensemble.IForest (getIForest) where
+module HOD.Ensemble.IForest where
 
 import Data.List.Unique (uniq)
 
@@ -29,12 +29,12 @@ data IForest = IForest {
     } deriving (Show)
 
 
-getIForest :: Int -> Int -> DataFrame -> Seed -> IForest
-getIForest n s x sd = IForest {
+getIForest :: Int -> Int -> Seed -> DataFrame -> IForest
+getIForest n s sd x = IForest {
                             numTrees = n, 
                             subsamplingSize = s, 
                             df = x,
-                            itrees = genITrees n s (dat x) sd
+                            itrees = genITrees n s sd (dat x)
                         }
 
 
@@ -61,8 +61,8 @@ getITree mat = let  numAttr = length $ head mat
                     else EmptyNode
 
 
-genITrees :: NumSamples -> SampleSize -> MAT -> Seed -> Maybe [ITree]
-genITrees n s x sd | n * s <= 0 || length x <= n * s = Nothing
+genITrees :: NumSamples -> SampleSize -> Seed -> MAT  -> Maybe [ITree]
+genITrees n s sd x | n * s <= 0 || length x < n * s = Nothing
                    | otherwise = let maybeSubsamples = genSubsample x n s sd
                                  in case maybeSubsamples of 
                                         Just subsamples -> Just (map getITree subsamples)
@@ -89,8 +89,8 @@ getAnomalyScoreHelper _ _ [] = []
 getAnomalyScoreHelper hlim (t:lstItree) r = pathLength hlim r t : getAnomalyScoreHelper hlim lstItree r
 
 
-getAnomalyScore :: MAT -> IForest -> Int -> Maybe [Double]
-getAnomalyScore mat iforest hlim = case itrees iforest of 
+getAnomalyScore :: IForest -> Int -> MAT -> Maybe [Double]
+getAnomalyScore iforest hlim mat = case itrees iforest of 
                                     Just lstItree -> Just scores 
                                                     where lstPathLength = getAnomalyScoreHelper hlim lstItree <$> mat
                                                           scores = average <$> lstPathLength
