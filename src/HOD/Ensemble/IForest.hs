@@ -6,7 +6,6 @@ import HOD.CSV.DataFrame
 
 import HOD.Random
 
--- TODO : Complete this module
 eps :: Fractional p => p
 eps = 1e-5
 
@@ -83,9 +82,9 @@ pathLength hlim inp itree = let p = splitAttr itree
 average :: [Double] -> Double
 average l = sum l / fromIntegral (length l)
 
-
+-- TODO : Fix error in getting anomaly score
 getAnomalyScoreHelper :: Int -> [ITree] -> [Double] -> [Double]
-getAnomalyScoreHelper _ _ [] = []
+getAnomalyScoreHelper _ [] _ = []
 getAnomalyScoreHelper hlim (t:lstItree) r = pathLength hlim r t : getAnomalyScoreHelper hlim lstItree r
 
 

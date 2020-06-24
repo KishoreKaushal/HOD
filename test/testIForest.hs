@@ -11,7 +11,6 @@ hlim = 4 :: Int
 main :: IO ()
 main = do 
     df <- fromCSV "/home/travis/build/KishoreKaushal/HOD/test/pima.csv"
-    -- df <- fromCSV "/home/kaushal/Documents/git/haskell-projects/HOD/test/pima.csv"
-    iforest <-  pure $ getIForest numSamples sampleSize seed df
-    print $ getAnomalyScore (dat df) iforest hlim 
+    let iforest =  getIForest numSamples sampleSize seed df
+    print $ getAnomalyScore iforest hlim (dat df)
 
